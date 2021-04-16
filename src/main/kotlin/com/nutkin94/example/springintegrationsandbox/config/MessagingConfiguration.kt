@@ -5,7 +5,10 @@ import com.nutkin94.example.springintegrationsandbox.interceptor.CustomIntercept
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.integration.channel.DirectChannel
+import org.springframework.integration.channel.PublishSubscribeChannel
 import org.springframework.messaging.MessageChannel
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 @Configuration
 class MessagingConfiguration {
@@ -21,4 +24,15 @@ class MessagingConfiguration {
         return channel
     }
 
+    @Bean
+    fun publishSubscribeChannel(threadPool: ExecutorService): PublishSubscribeChannel {
+        val queueChannel = PublishSubscribeChannel(threadPool)
+        queueChannel.addInterceptor(CustomInterceptor())
+        return queueChannel
+    }
+
+    @Bean
+    fun threadPool(): ExecutorService {
+        return Executors.newFixedThreadPool(5)
+    }
 }
