@@ -17,7 +17,8 @@ class MessageService(val messageChannel: DirectChannel) {
     private fun createSubscriberWithName(name: String) {
         messageChannel.subscribe {
             val message = it.payload as CustomMessage
-            println("$name: receive message: ${message.text}")
+            Thread.sleep(1000L)
+            println("${Thread.currentThread().name} thread on $name: receive message: ${message.text}")
         }
     }
 }

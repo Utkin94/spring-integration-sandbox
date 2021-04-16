@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/message")
-class MessageController(val messageChannel: MessageChannel?) {
+class MessageController(val directChannel: MessageChannel?) {
 
     @PostMapping
     fun createMessage(@RequestBody message: String): String {
-
-        messageChannel?.send(GenericMessage<String>(message))
+        println("${Thread.currentThread().name} send message to directChannel")
+        directChannel?.send(GenericMessage<String>(message))
 
         return "Message $message published!"
     }
