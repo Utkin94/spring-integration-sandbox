@@ -19,9 +19,4 @@ class MessagingConfiguration {
 
         return channel
     }
-
-    @Bean
-    fun integrationConversionService(): ConversionService {
-        return ApplicationConversionService()
-    }
 }
